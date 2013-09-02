@@ -54,7 +54,7 @@ add_lunch_combo pac_crespo-userdebug
 add_lunch_combo pac_flo-userdebug
 add_lunch_combo pac_grouper-userdebug
 add_lunch_combo pac_maguro-userdebug
-add_lunch_combo pac_mako-userdebug
+add_lunch_combo orca_mako-userdebug
 add_lunch_combo pac_manta-userdebug
 add_lunch_combo pac_tilapia-userdebug
 add_lunch_combo pac_toro-userdebug
@@ -110,7 +110,6 @@ add_lunch_combo pac_t0ltetmo-userdebug
 add_lunch_combo pac_n7000-userdebug
 add_lunch_combo pac_n7100-userdebug
 add_lunch_combo pac_quincyatt-userdebug
-add_lunch_combo pac_quincytmo-userdebug
 add_lunch_combo pac_venturi-userdebug
 add_lunch_combo pac_ypg1-userdebug
 # Samsung & LGE Legacy Devices

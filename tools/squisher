@@ -35,7 +35,7 @@ if [ ! -f "$OTAPACKAGE" ]; then
 	exit 1
 fi
 
-OPTICHARGER=$ANDROID_BUILD_TOP/vendor/pac/tools/opticharger
+OPTICHARGER=$ANDROID_BUILD_TOP/vendor/orcaio/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
 
@@ -65,16 +65,16 @@ $SED -i \
 	-e '/ro\.build\.type/s/eng/user/' \
 	$REPACK/ota/system/build.prop
 
-# Delete PAC specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/pac/tools/squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/pac/tools/squisher.rm`; do
+# Delete ORCA specific files
+if [ -f $ANDROID_BUILD_TOP/vendor/orcaio/tools/squisher.rm ]; then
+	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/orcaio/tools/squisher.rm`; do
 		rm -f $REPACK/ota/$RM_FILE
 	done
 fi
 
 # Delete target product specific files
-if [ -f $ANDROID_BUILD_TOP/vendor/pac/tools/$TARGET_PRODUCT-squisher.rm ]; then
-	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/pac/tools/$TARGET_PRODUCT-squisher.rm`; do
+if [ -f $ANDROID_BUILD_TOP/vendor/orcaio/tools/$TARGET_PRODUCT-squisher.rm ]; then
+	for RM_FILE in `cat $ANDROID_BUILD_TOP/vendor/orcaio/tools/$TARGET_PRODUCT-squisher.rm`; do
 		rm -f $REPACK/ota/$RM_FILE
 	done
 fi
@@ -91,9 +91,9 @@ rm -rf $REPACK/ota/recovery
 
 # Determine what to name the new signed package
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
-	PACVERSION=`grep 'ro.pacrom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.pacrom.version=//g'`
-	OUTFILE=$OUT/$PACVERSION.zip
-	echo PACVERSION: $PACVERSION
+	ORCAVERSION=`grep 'ro.orcarom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.pacrom.version=//g'`
+	OUTFILE=$OUT/$ORCAVERSION.zip
+	echo PACVERSION: $ORCAVERSION
 else
 	OUTFILE=$OUT/update-squished.zip
 fi
@@ -128,7 +128,7 @@ echo
 echo "Use This link in a browser after uploading the the zip to your req'd host"
 echo "If you do not know the password ask in the normal places"
 echo "---------------- LINK ----------------"
-echo "http://pac-rom.com/ota/?device=$DEVICE&version=$PACVERSION&md5=$MD5VAL"
+echo "http://orcaproject.co/ota/?device=$DEVICE&version=$ORCAVERSION&md5=$MD5VAL"
 echo "-------------- END LINK --------------"
 echo "be sure to make sure you use a direct linkable host"
 echo "got probs with the OTA contact pvyParts in hangouts"

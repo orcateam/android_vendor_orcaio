@@ -4,7 +4,7 @@ usage()
 {
 	echo ""
 	echo "Usage:"
-	echo "  build-pac.sh [options] device"
+	echo "  build-orca.sh [options] device"
 	echo ""
 	echo "  Options:"
 	echo "    -c  Clean before build"
@@ -13,7 +13,7 @@ usage()
 	echo "    -s  Sync before build"
 	echo ""
 	echo "  Example:"
-	echo "    ./build-pac.sh -c mako"
+	echo "    ./build-orca.sh -c mako"
 	echo ""
 	exit 1
 }
@@ -36,7 +36,7 @@ if [ ! -d ".repo" ]; then
 	exit 1
 fi
 if [ ! -d "vendor/pac" ]; then
-	echo "No vendor/pac directory found.  Is this a PAC build tree?"
+	echo "No vendor/orcaio directory found.  Is this a ORCA build tree?"
 	exit 1
 fi
 
@@ -73,18 +73,18 @@ fi
 device="$1"
 
 # get current version
-eval $(grep "^PAC_VERSION_" vendor/pac/config/pac_common.mk | sed 's/ *//g')
-VERSION="$PAC_VERSION_MAJOR.$PAC_VERSION_MINOR.$PAC_VERSION_MAINTENANCE"
+eval $(grep "^ORCA_VERSION_" vendor/orcaio/config/orca_common.mk | sed 's/ *//g')
+VERSION="$ORCA_VERSION_MAJOR.$ORCA_VERSION_MINOR.$ORCA_VERSION_MAINTENANCE"
 
 # get time of startup
 t1=$($DATE +%s)
 
 echo -e "${cya}Building ${bldgrn}P ${bldppl}A ${bldblu}C ${bldylw}v$VERSION ${txtrst}"
 
-# PAC device dependencies
+# ORCA device dependencies
 echo -e ""
-echo -e "${bldblu}Looking for PAC product dependencies${txtrst}${cya}"
-vendor/pac/tools/getdependencies.py "$device"
+echo -e "${bldblu}Looking for ORCA product dependencies${txtrst}${cya}"
+vendor/orcaio/tools/getdependencies.py "$device"
 echo -e "${txtrst}"
 
 if [ "$opt_clean" -ne 0 ]; then
@@ -132,11 +132,11 @@ make -j"$opt_jobs" bacon
 echo -e ""
 
 # squisher
-vendor/pac/tools/squisher
+vendor/orcaio/tools/squisher
 
 # cleanup unused built
 rm -f out/target/product/$device/cm-*.*
-rm -f out/target/product/$device/pac_*-ota*.zip
+rm -f out/target/product/$device/orca_*-ota*.zip
 
 # finished? get elapsed time
 t2=$($DATE +%s)
