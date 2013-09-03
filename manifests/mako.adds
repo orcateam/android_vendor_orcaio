@@ -1,0 +1,23 @@
+[    
+    {
+        "remote":       "github",
+        "account":      "thefutureosp",
+        "repository":   "device_lge_mako",
+        "target_path":  "device/lge/mako",
+        "revision":     "jb4.3"
+    },
+    {
+        "remote":       "github",
+        "account":      "ParanoidAndroid",
+        "repository":   "lge-kernel-mako",
+        "target_path":  "kernel/lge/mako",
+        "revision":     "jb43"
+    },
+    {
+        "remote":       "github",
+        "account":      "ParanoidAndroid",
+        "repository":   "proprietary_vendor_lge",
+        "target_path":  "vendor/lge",
+        "revision":     "jb43"
+    }    
+]

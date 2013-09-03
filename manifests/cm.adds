@@ -1,0 +1,8 @@
+[
+    {
+        "remote":       "cm",
+        "repository":   "android_packages_apps_SoundRecorder",
+        "target_path":  "packages/apps/SoundRecorder",
+        "revision":     "cm-10.2"
+    }
+]

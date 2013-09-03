@@ -6,7 +6,9 @@ import json
 import re
 from xml.etree import ElementTree
 
-device = sys.argv[1];
+product = sys.argv[1];
+
+device = product[product.index("_") + 1:]
 
 def exists_in_tree(lm, repository):
     for child in lm.getchildren():
@@ -90,8 +92,8 @@ def add_to_manifest(repositories):
     f.close()
 
 def fetch_dependencies(device):
-#    print 'Looking for ORCA product dependencies'
-    dependencies_path = 'vendor/orcaio/dependencies/' + device + '.dependencies'
+    print 'Looking for product dependencies'
+    dependencies_path = 'vendor/orca/dependencies/' + device + '.dependencies'
 
     syncable_repos = []
 
@@ -107,15 +109,15 @@ def fetch_dependencies(device):
                 fetch_list.append(dependency)
                 syncable_repos.append(dependency['target_path'])
             else:
-                print '    %s already in local_manifest' % repo_full
+                print '  %s already in local_manifest' % repo_full
 
         dependencies_file.close()
 
         if len(fetch_list) > 0:
             print 'Adding dependencies to local_manifest'
             add_to_manifest(fetch_list)
-#    else:
-#        print 'dependencies definition file not found, bailing out.'
+    else:
+        print 'dependencies definition file not found, bailing out.'
 
     if len(syncable_repos) > 0:
         print 'Syncing dependencies'
