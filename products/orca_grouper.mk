@@ -7,8 +7,11 @@ OVERLAY_TARGET := pa_nav_tvdpi
 # AOKP device overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/orcaio/overlay/aokp/device/grouper
 
-# include orcaio common configuration
-include vendor/orcaio/config/orca_common.mk
+# Define Orca bootanimation size
+ORCA_BOOTANIMATION_NAME := XHDPI
+
+# include orca common configuration
+include vendor/orcaio/config/pac_common.mk
 
 # Inherit CM device configuration
 $(call inherit-product, device/asus/grouper/cm.mk)

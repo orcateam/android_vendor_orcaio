@@ -7,7 +7,7 @@ OVERLAY_TARGET := pa_manta
 # AOKP device overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/orcaio/overlay/aokp/common_tablet
 
-# include orcaio common configuration
+# include Orca common configuration
 include vendor/orcaio/config/orca_common.mk
 
 # Inherit CM device configuration

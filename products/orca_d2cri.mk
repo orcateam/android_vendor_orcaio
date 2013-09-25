@@ -19,7 +19,7 @@ $(call inherit-product, device/samsung/d2cri/cm.mk)
 PRODUCT_NAME := orca_d2cri
 
 # Update local_manifest.xml
-GET_PROJECT_RMS := $(shell vendor/orcaio/tools/removeprojects.py $(PRODUCT_NAME))
-GET_PROJECT_ADDS := $(shell vendor/orcaio/tools/addprojects.py $(PRODUCT_NAME))
+GET_PROJECT_RMS := $(shell vendor/orca/tools/removeprojects.py $(PRODUCT_NAME))
+GET_PROJECT_ADDS := $(shell vendor/orca/tools/addprojects.py $(PRODUCT_NAME))
 
 endif

@@ -119,7 +119,7 @@ rm -rf out/target/product/$device/system/
 # lunch device
 echo -e ""
 echo -e "${bldblu}Lunching device ${txtrst}"
-lunch "pac_$device-userdebug";
+lunch "orca_$device-userdebug";
 
 echo -e ""
 echo -e "${bldblu}Starting compilation ${txtrst}"

@@ -15,7 +15,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Copy specific ROM files
 PRODUCT_COPY_FILES += \
-    vendor/orcaio/prebuilt/common/apk/GooManager.apk:system/app/GooManager.apk
+    vendor/orcaio/prebuilt/common/apk/GooManager.apk:system/app/GooManager.apk \
+    vendor/orcaio/prebuilt/common/apk/Helium.apk:system/app/Helium.apk \
+    vendor/orcaio/prebuilt/common/apk/ExplorerEX.apk:system/app/ExplorerEX.apk
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
@@ -71,7 +73,7 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/orcaio/overlay/aokp/common
 ### PARANOID ###
 # PARANOID Packages
 PRODUCT_PACKAGES += \
-    HALO
+    Focal
 
 # ParanoidAndroid Overlays
 PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/common
@@ -110,7 +112,7 @@ CM_BUILD := $(BOARD)
 # Add PA release version
 PA_VERSION_MAJOR = 3
 PA_VERSION_MINOR = 9
-PA_VERSION_MAINTENANCE = 7
+PA_VERSION_MAINTENANCE = 9-RC2
 PA_PREF_REVISION = 1
 VERSION := $(PA_VERSION_MAJOR).$(PA_VERSION_MINOR)$(PA_VERSION_MAINTENANCE)
 PA_VERSION := pa_$(BOARD)-$(VERSION)-$(shell date +%0d%^b%Y-%H%M%S)
@@ -118,7 +120,7 @@ PA_VERSION := pa_$(BOARD)-$(VERSION)-$(shell date +%0d%^b%Y-%H%M%S)
 # Orca version
 ORCA_VERSION_MAJOR = 3
 ORCA_VERSION_MINOR = 0
-ORCA_VERSION_MAINTENANCE = 4
+ORCA_VERSION_MAINTENANCE = 5
 ORCA_VERSION := $(ORCA_VERSION_MAJOR).$(ORCA_VERSION_MINOR).$(ORCA_VERSION_MAINTENANCE)
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -128,7 +130,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.pa.family=$(PA_CONF_SOURCE) \
     ro.pa.version=$(VERSION) \
     ro.papref.revision=$(PA_PREF_REVISION) \
-    ro.aokp.version=$(BOARD)_jb-mr1_milestone-2
+    ro.aokp.version=$(BOARD)_jb-mr2
 
 # Disable ADB authentication and set root access to Apps and ADB
 ADDITIONAL_DEFAULT_PROPERTIES += \

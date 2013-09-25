@@ -10,7 +10,7 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/orcaio/overlay/aokp/device/d2-common
 # Define Orca bootanimation size
 ORCA_BOOTANIMATION_NAME := XHDPI
 
-# include Orca common configuration
+# include ORCA common configuration
 include vendor/orcaio/config/orca_common.mk
 
 # Inherit CM device configuration

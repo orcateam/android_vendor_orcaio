@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Squish a CM otapackage for distribution
 # cyanogen
 #
+
+. ${ANDROID_BUILD_TOP}/vendor/orcaio/tools/colors
 
 OUT_TARGET_HOST=`uname -a | grep Darwin`
 if [ -z "$OUT_TARGET_HOST" ]
@@ -19,7 +21,7 @@ else
 fi
 
 if [ -z "$OUT" -o ! -d "$OUT" ]; then
-	echo "ERROR: $0 only works with a full build environment. $OUT should exist."
+	echo -e ${red}"ERROR: $0 only works with a full build environment. $OUT should exist."${txtrst}
 	exit 1
 fi
 
@@ -31,7 +33,7 @@ else
     OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip
 fi
 if [ ! -f "$OTAPACKAGE" ]; then
-	echo "$OTAPACKAGE doesn't exist!";
+	echo -e ${red}"$OTAPACKAGE doesn't exist!"${txtrst};
 	exit 1
 fi
 
@@ -40,19 +42,18 @@ QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
 
 REPACK=$OUT/repack.d
-printf "Sanitizing environment..."
+echo -e ${bldcya}"Sanitizing environment..."${txtrst}
 rm -rf $REPACK
 mkdir -p $REPACK
-echo
 
 
 # Unpack the otapackage and opticharge all apks
 mkdir $REPACK/ota
 (
 cd $REPACK/ota
-printf "Unpacking $OTAPACKAGE..."
+echo -e ${bldgrn}"Unpacking${txtrst}: ${grn}$OTAPACKAGE..."${txtrst}
 unzip $QUIET $OTAPACKAGE
-echo
+echo -e ""
 cd $REPACK/ota/system/framework
 $OPTICHARGER framework-res.apk
 cd $REPACK/ota/system/app
@@ -91,48 +92,55 @@ rm -rf $REPACK/ota/recovery
 
 # Determine what to name the new signed package
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
-	ORCAVERSION=`grep 'ro.orcarom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.pacrom.version=//g'`
+	ORCAVERSION=`grep 'ro.orcarom.version=' $REPACK/ota/system/build.prop | sed -e 's/ro.orcarom.version=//g'`
+	ABIGEN=`grep 'ro.product.cpu.abi=' $REPACK/ota/system/build.prop | sed -e 's/ro.product.cpu.abi=//g'`
 	OUTFILE=$OUT/$ORCAVERSION.zip
-	echo PACVERSION: $ORCAVERSION
+	echo -e ""; echo -e "${bldgrn}P${bldppl}A${bldblu}C${bldylw}-VERSION${txtrst}:${cya} $PACVERSION"${txtrst}; echo -e ""
 else
 	OUTFILE=$OUT/update-squished.zip
 fi
 
+
+
+if [ -n $ABIGEN ]; then
+	echo ${cya}"Packing in Pre-Built Libs for CPU Variant:${ylw}$ABIGEN"${txtrst}
+	cp ${ANDROID_BUILD_TOP}/vendor/orcaio/prebuilt/libs/$ABIGEN/libbypass.so $REPACK/ota/system/lib/libbypass.so
+	echo ""
+fi
+
 # Pack it up and sign
-printf "Zipping package..."
+echo -e ${grn}"Zipping package..."${txtrst}
 ( cd $REPACK/ota; zip $QUIET -r $REPACK/update.zip . )
-echo
-printf "Signing package..."
+echo -e ${grn}"Signing package..."${txtrst}
 SECURITYDIR=$ANDROID_BUILD_TOP/build/target/product/security
 java -Xmx1024m \
 	-jar $ANDROID_BUILD_TOP/out/host/$OUT_TARGET_HOST/framework/signapk.jar \
 	-w $SECURITYDIR/testkey.x509.pem $SECURITYDIR/testkey.pk8 \
 	$REPACK/update.zip $OUTFILE
-echo
-printf "Cleaning up..."
+echo -e ${grn}"Cleaning up..."${txtrst}
 rm -rf $REPACK
-echo
 
 # Create a md5 checksum image of the repacked package
 (
 img=`basename $OUTFILE`
 cd `dirname $OUTFILE`
 $MD5 $img >$img.md5sum
-echo
-echo "Package complete: $OUTFILE"
-cat $img.md5sum
+ZIPSIZE=`ls -lah $OUTFILE | awk '{ print $5}'`
+echo -e ""; echo -e ${bldgrn}"Package complete:"${txtrst}
+echo -e ${cya}"ZIP:${ylw}  $img"${txtrst}
+echo -e ${cya}"MD5: ${ylw} `cat $img.md5sum | awk '{print $1}'`"${txtrst}
+echo -e ${cya}"SIZE:${ylw} $ZIPSIZE"${txtrst}
 MD5VAL=`cat $img.md5sum  | awk '{ print $1 }'`
-DEVICE=`echo $TARGET_PRODUCT | cut -d "_" -f 2`
+DEVICE=`echo -e $TARGET_PRODUCT | cut -d "_" -f 2`
 #OTA link for ease of use !
-echo
-echo "Use This link in a browser after uploading the the zip to your req'd host"
-echo "If you do not know the password ask in the normal places"
-echo "---------------- LINK ----------------"
-echo "http://orcaproject.co/ota/?device=$DEVICE&version=$ORCAVERSION&md5=$MD5VAL"
-echo "-------------- END LINK --------------"
-echo "be sure to make sure you use a direct linkable host"
-echo "got probs with the OTA contact pvyParts in hangouts"
-echo
+echo -e "Use this link in a browser after uploading the zip to your required host."
+echo -e "If you do not know the password ask in the normal places."
+echo -e ${ylwrev}"                                   LINK                                         "${txtrst}
+echo -e ${cya}"http://orcaproject.co/ota/?device=$DEVICE&version=$ORCAVERSION&md5=$MD5VAL"${txtrst}
+echo -e ${ylwrev}"                                 END LINK                                       "${txtrst}
+echo -e "Make sure you use a direct linkable host, got problems"
+echo -e "with the OTA? Contact ${txtbld}pvyParts${txtrst} in hangouts."
+echo -e ""
 )
 
 exit 0

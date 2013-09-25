@@ -1,15 +1,12 @@
-# Nexus Devices
 add_lunch_combo orca_crespo-userdebug
 add_lunch_combo orca_flo-userdebug
 add_lunch_combo orca_grouper-userdebug
 add_lunch_combo orca_maguro-userdebug
 add_lunch_combo orca_mako-userdebug
-add_lunch_combo orca_mako-userdebug
 add_lunch_combo orca_manta-userdebug
 add_lunch_combo orca_tilapia-userdebug
 add_lunch_combo orca_toro-userdebug
 add_lunch_combo orca_toroplus-userdebug
-# Samsung 2013
 add_lunch_combo orca_d2att-userdebug
 add_lunch_combo orca_d2cri-userdebug
 add_lunch_combo orca_d2mtr-userdebug

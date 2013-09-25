@@ -1,14 +1,14 @@
 # Check for target product
 ifeq (orca_mako,$(TARGET_PRODUCT))
 
+# Define Orca bootanimation size
+ORCA_BOOTANIMATION_NAME := XHDPI
+
 # OVERLAY_TARGET adds overlay asset source
 OVERLAY_TARGET := pa_nav_xhdpi
 
 # AOKP device overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/orcaio/overlay/aokp/device/mako
-
-# Define Orca bootanimation size
-ORCA_BOOTANIMATION_NAME := XHDPI
 
 # include ORCA common configuration
 include vendor/orcaio/config/orca_common.mk
