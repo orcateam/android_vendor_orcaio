@@ -131,6 +131,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.pa.version=$(VERSION) \
     ro.papref.revision=$(PA_PREF_REVISION) \
     ro.aokp.version=$(BOARD)_jb-mr2
+    
+# goo.im properties
+ifneq ($(DEVELOPER_VERSION),true)
+    PRODUCT_PROPERTY_OVERRIDES += \
+      ro.goo.developerid=drewgaren \
+      ro.goo.rom=Orca3_Nightlies \
+      ro.goo.version=$(shell date +%s)
+endif    
 
 # Disable ADB authentication and set root access to Apps and ADB
 ADDITIONAL_DEFAULT_PROPERTIES += \
